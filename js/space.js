@@ -9,9 +9,11 @@ document.getElementById('btnBuscar').addEventListener('click', function() {
             container.innerHTML = ''; 
 
             if (data.collection.items.length === 0) {
-                container.innerHTML = '<p>No hay resultados.</p>';
+                container.innerHTML = '<p>No se encontraron resultados.</p>';
                 return;
             }
+            let row = document.createElement('div');
+            row.classList.add('row');
 
             data.collection.items.forEach(item => {
                 if (item.links && item.links.length > 0) {
@@ -20,7 +22,7 @@ document.getElementById('btnBuscar').addEventListener('click', function() {
                     let description = item.data[0].description || 'Sin descripción disponible';
                     let date = item.data[0].date_created || 'Fecha no disponible';
 
-                    container.innerHTML += `
+                            row.innerHTML += `
                         <div class="col-md-4 mb-4">
                             <div class="card">
                                 <img src="${imagenUrl}" class="card-img-top" alt="${title}">
@@ -34,7 +36,9 @@ document.getElementById('btnBuscar').addEventListener('click', function() {
                     `;
                 }
             });
+            container.appendChild(row);
         })
+
         .catch(error => {
             console.error('Error al buscar los datos:', error);
         });
